@@ -5,8 +5,8 @@ var districtData = d3.map();
 
 var us;
 var congress;
-var datasetNumber = 1;
-var colorAttribute = "amtRatio";
+var datasetNumber = 0;
+var colorAttributes = ["amtRatio", "contRatio", "fundingDurationRatio"];
 
 var quantize = d3.scale.quantize()
     .domain([0, .15])
@@ -47,7 +47,7 @@ queue()
 function loadingCallback(error, map) {
   congress = map[1];
   us = map[2];
-  drawMap(colorAttribute);
+  drawMap(colorAttributes[datasetNumber]);
 }
 
 
@@ -71,16 +71,16 @@ function drawMap(attribute) {
         .attr("class", function(d) { 
           if(districtData.has(d.id)) { 
             //console.log(districtData.get(d.id));
-            return quantize(districtData.get(d.id)[attribute] * 20); 
+            return quantize(districtData.get(d.id)[attribute] * 5); 
           }
         })
         .attr("d", path)
       .append("title")
         .text(function(d) { 
           if(districtData.has(d.id)) { 
-            return "Contracts: " + districtData.get(d.id).contracts +
-              "\nValue: " + numeral(districtData.get(d.id).amt).format('$0.00a') + 
-              "\nDuration: " + districtData.get(d.id).fundingDuration + " days"; 
+            return "Contracts: \t" + districtData.get(d.id).contracts +
+              "\nValue:\t\t" + numeral(districtData.get(d.id).amt).format('$0a') + 
+              "\nDuration: \t\t" + districtData.get(d.id).fundingDuration + " days"; 
           } else {
            return "No data"; 
           }
@@ -101,7 +101,7 @@ function drawMap(attribute) {
 
 d3.select('button').on('click', function() {
   datasetNumber += 1;
-    drawMap(colorAttribute);
+  drawMap(colorAttributes[datasetNumber % 3]);
 });
 
 
