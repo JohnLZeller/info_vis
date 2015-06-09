@@ -82,7 +82,7 @@ function drawMap(attribute) {
               "\nValue:\t\t" + numeral(districtData.get(d.id).amt).format('$0a') + 
               "\nDuration: \t\t" + districtData.get(d.id).fundingDuration + " days"; 
           } else {
-           return "No data"; 
+           return "No contracts"; 
           }
         });
             

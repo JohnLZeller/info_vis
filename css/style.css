@@ -42,7 +42,7 @@ path {
 .state-boundaries {
   pointer-events: none;
   fill: none;
-	stroke: #444;
+	stroke: #bbb;
 	stroke-width: .5px;
 }
 
