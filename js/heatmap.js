@@ -71,13 +71,21 @@ function drawMap(attribute) {
         .attr("class", function(d) { 
           if(districtData.has(d.id)) { 
             //console.log(districtData.get(d.id));
-            return quantize(districtData.get(d.id)[attribute] * 30); 
+            return quantize(districtData.get(d.id)[attribute] * 20); 
           }
         })
         .attr("d", path)
       .append("title")
-        .text(function(d) { return d.id; });
-
+        .text(function(d) { 
+          if(districtData.has(d.id)) { 
+            return "Contracts: " + districtData.get(d.id).contracts +
+              "\nValue: " + numeral(districtData.get(d.id).amt).format('$0.00a') + 
+              "\nDuration: " + districtData.get(d.id).fundingDuration + " days"; 
+          } else {
+           return "No data"; 
+          }
+        });
+            
     svg.append("path")
         .attr("class", "district-boundaries")
         .attr("clip-path", "url(#clip-land)")
