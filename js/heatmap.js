@@ -40,15 +40,15 @@ svg.call(tip);
 
 
 queue()
-    .defer(d3.tsv, "final_data.tsv", function(d) { 
+    .defer(d3.tsv, "data/final_data.tsv", function(d) { 
       //datasets[0].set(d.id, +d.district); 
       swag.set(d.district, d);
     })
-    .defer(d3.json, "us_districts.json")
-    .defer(d3.json, "us-congress-10m.json")
-    .defer(d3.json, "us-10m.json")
+    .defer(d3.json, "json/us_districts.json")
+    .defer(d3.json, "json/us-congress-10m.json")
+    .defer(d3.json, "json/us-10m.json")
     
-    //.defer(d3.json, "usa_map.json")
+    //.defer(d3.json, "json/usa_map.json")
     .awaitAll(loadingCallback);
 
 
