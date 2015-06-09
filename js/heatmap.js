@@ -1,6 +1,10 @@
 var width = 960,
     height = 600;
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 var districtData = d3.map();
 
 var us;
@@ -78,9 +82,9 @@ function drawMap(attribute) {
     .append("title")
       .text(function(d) { 
         if(districtData.has(d.id)) { 
-          return "Contracts: \t" + districtData.get(d.id).contracts +
-            "\nValue:\t\t" + numeral(districtData.get(d.id).amt).format('$0a') + 
-            "\nDuration: \t\t" + districtData.get(d.id).fundingDuration + " days"; 
+          return "Contracts: \t" + numberWithCommas(districtData.get(d.id).contracts) +
+            "\nValue: \t\t$" + numberWithCommas(districtData.get(d.id).amt) + 
+            "\nDuration: \t\t" + numberWithCommas(districtData.get(d.id).fundingDuration) + " day(s)"; 
         } else {
          return "No data"; 
         }

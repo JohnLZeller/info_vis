@@ -32,10 +32,15 @@ var svg2 = d3.select("#scatter").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// add the tooltip area to the webpage
-var tooltip = d3.select("#scatter").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    //console.log(JSON.stringify(d));
+    return "<strong>Rating:</strong> <span style='color:red'>" + d.id + "</span>";
+  });
+
+svg2.call(tip);
 
 // load data
 d3.tsv("data/companies.tsv", function(error, data) {
@@ -83,24 +88,12 @@ d3.tsv("data/companies.tsv", function(error, data) {
       .attr("r", 3.5)
       .attr("cx", xMap)
       .attr("cy", yMap)
-      .style("fill", "#02326B") 
-      .on("mouseover", function(d) {
-          tooltip.transition()
-               .duration(200)
-               .style("opacity", 0.9)
-               .style("background-color", "#fff")
-               .style("height", "65px");
-          tooltip.html("<b>" + d.company + "</b><br/><br/>&nbsp;&nbsp;$" + numberWithCommas(yValue(d)) + " Received<br/>&nbsp;&nbsp;" 
-                                             + numberWithCommas(d.contracts) + " Contracts<br/>&nbsp;&nbsp;"
-                                             + numberWithCommas(xValue(d)) + " Employees")
-               .style("left", (d3.event.pageX + 5) + "px")
-               .style("top", (d3.event.pageY - 28) + "px")
-               .style("padding-left", "5px");
-      })
-      .on("mouseout", function(d) {
-          tooltip.transition()
-               .duration(500)
-               .style("opacity", 0);
+      .style("fill", "#02326B")
+    .append("title")
+      .text(function(d) { 
+        return d.company + "\n\nContracts: \t" + numberWithCommas(d.contracts) +
+          "\nValue: \t\t$" + numberWithCommas(yValue(d)) + 
+          "\nEmployees: \t" + numberWithCommas(xValue(d));
       });
 
 });
