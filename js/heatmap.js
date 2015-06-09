@@ -40,7 +40,7 @@ svg.call(tip);
 
 
 queue()
-    .defer(d3.tsv, "data/final_data.tsv", function(d) { 
+    .defer(d3.tsv, "data/districts.tsv", function(d) { 
       //datasets[0].set(d.id, +d.district); 
       swag.set(d.district, d);
     })
@@ -80,7 +80,7 @@ function drawMap(dataset, map) {
         .attr("class", function(d) { 
           if(dataset.has(d.id)) { 
             console.log(dataset.get(d.id));
-            return quantize(dataset.get(d.id).amt_ratio * 30); 
+            return quantize(dataset.get(d.id).amtRatio * 30); 
           }
         })
         .attr("d", path)

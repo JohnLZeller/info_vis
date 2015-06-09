@@ -1,4 +1,4 @@
-district	amt	amt_ratio	contracts	cont_ratio	avg_fundingDuration	fundingDurationRatio
+district	amt	amtRatio	contracts	contRatio	fundingDuration	fundingDurationRatio
 2302	867550.26	0.0024	11	0.0213	423	0.2318
 4814	218263.0	0.0019	1	0.0019	286	0.1567
 5308	1254320.67	0.0028	8	0.0155	296	0.1622
