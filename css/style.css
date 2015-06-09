@@ -1,3 +1,5 @@
+/* ---------- HEATMAP ---------- */
+
 .counties {
   fill: none;
 }
@@ -17,9 +19,6 @@
 .q6-9 { fill:rgb(33,113,181); }
 .q7-9 { fill:rgb(8,81,156); }
 .q8-9 { fill:rgb(8,48,107); }
-
-
-
 
 path {
   stroke-linejoin: round;
@@ -42,7 +41,7 @@ path {
 .state-boundaries {
   pointer-events: none;
   fill: none;
-  stroke: #fff;
+  stroke: #bbb;
   stroke-width: 1.5px;
 }
 
@@ -54,4 +53,33 @@ path {
 #heatmap {
 	width: 75%;
 	display: inline-block;
+}
+
+/* ---------- SCATTER ---------- */
+
+body {
+  font: 11px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
+
+#scatter {
+  width: 75%;
+  display: inline-block;
 }
