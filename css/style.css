@@ -91,3 +91,20 @@ body {
   width: 1000px;
   margin: 0 auto;
 }
+
+/* ---------- SCROLL BAR ---------- */
+
+.bar {
+  fill: steelblue;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+#scrollbarchart {
+  width: 1000px;
+  margin: 0 auto;
+}
