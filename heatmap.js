@@ -44,11 +44,11 @@ dataset1 = d3.tsv("unemployment.tsv", function(error, data) {
 
 queue()
     .defer(d3.json, "usa_map.json", function(d) { us_map = d; })
-    .defer(d3.tsv, "unemployment.tsv", function(d) { districtRatings1.set(d.id, +d.rate); })
-    .defer(d3.tsv, "contracts-amounts.tsv", function(d) { datasets[0].set(d.id, +d.cont-ratio); datasets[1].set(d.id, +d.amt-ratio); })
-    .awaitAll(function(a, b) { drawMap(us_map, currentDataset); });
+    .defer(d3.tsv, "unemployment.tsv", function(d) { datasets[1].set(d.id, +d.rate); })
+    .defer(d3.tsv, "dataset2.tsv", function(d) { datasets[0].set(d.id, +d.rate); })
+    .awaitAll(function(a, b) { drawMap(us_map, datasets[datasetNumber % 3]); });
 
-function drawMap(datasetNumber) {
+function drawMap(map, dataset) {
     svg.append("g")
         .attr("class", "counties")
       .selectAll("path")
@@ -72,12 +72,8 @@ function drawMap(datasetNumber) {
 setTimeout(function() { drawMap(us_map, districtRatings1); }, 2000);
 
 d3.select('button').on('click', function() {
-    if ( datasetNumber == 1 ) {
-      datasetNumber = 2;
-    } else {
-      datasetNumber = 1;
-    }
-    currentDataset = datasets[datasetNumber];
+  datasetNumber += 1;
+    currentDataset = datasets[datasetNumber % 3];
     drawMap(us_map, currentDataset);
 });
 
