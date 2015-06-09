@@ -11,7 +11,27 @@
 </head>
 
 <body>
-   <button id="toggle">Toggle</button>
+  
+  <div id="heatmap"></div>
+  <div id="heatmap_legend">
+    <h2> Heatmap Dataset </h2>
+    <form id="heatmap_dataset">
+      <div>
+        <input id="hds0" type="radio" name="heatmap_dataset" value="0"> 
+        <label for="hds0"> Total dollar value </label>
+      </div>
+      <div>
+        <input id="hds1" type="radio" name="heatmap_dataset" value="1"> 
+        <label for="hds1"> Awarded contracts </label>
+        
+      </div>
+      <div>
+        <input id="hds2" type="radio" name="heatmap_dataset" value="2">
+        <label for="hds2"> Average contract duration </label>
+      </div>
+    </form>
+  </div>
+  <button id="toggle">Toggle</button>
 </body>
 
 <script src="js/heatmap.js"></script>

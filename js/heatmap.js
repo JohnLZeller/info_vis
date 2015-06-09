@@ -19,7 +19,7 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#heatmap").append("svg");
     .attr("width", width)
     .attr("height", height);
 
@@ -99,8 +99,8 @@ function drawMap(attribute) {
 }
 
 
-d3.select('button').on('click', function() {
-  datasetNumber += 1;
+d3.select('#heatmap_dataset').on('click', function() {
+  datasetNumber = d3.select('input[name="heatmap_dataset"]:checked').node().value
   drawMap(colorAttributes[datasetNumber % 3]);
 });
 

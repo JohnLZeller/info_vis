@@ -46,3 +46,11 @@ path {
   stroke-width: 1.5px;
 }
 
+#heatmap_legend {
+	width:20%;
+}
+
+#heatmap {
+	width: 75%;
+	display: inline-block;
+}
