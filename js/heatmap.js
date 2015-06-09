@@ -1,16 +1,12 @@
 var width = 960,
     height = 600;
 
-var swag = d3.map();
-var districtRatings1 = d3.map();
-var districtRatings2 = d3.map();
-var datasets = [d3.map(), d3.map(), d3.map()];
+var districtData = d3.map();
 
-var us_map;
 var us;
 var congress;
 var datasetNumber = 1;
-var currentDataset = districtRatings1;
+var colorAttribute = "amtRatio";
 
 var quantize = d3.scale.quantize()
     .domain([0, .15])
@@ -41,26 +37,21 @@ svg.call(tip);
 
 queue()
     .defer(d3.tsv, "data/districts.tsv", function(d) { 
-      //datasets[0].set(d.id, +d.district); 
-      swag.set(d.district, d);
+      districtData.set(d.district, d);
     })
-    .defer(d3.json, "json/us_districts.json")
     .defer(d3.json, "json/us-congress-10m.json")
     .defer(d3.json, "json/us-10m.json")
-    
-    //.defer(d3.json, "json/usa_map.json")
     .awaitAll(loadingCallback);
 
 
 function loadingCallback(error, map) {
-  us_map = map[1];
-  congress = map[2];
-  us = map[3];
-  drawMap(swag, us_map);
+  congress = map[1];
+  us = map[2];
+  drawMap(colorAttribute);
 }
 
 
-function drawMap(dataset, map) {
+function drawMap(attribute) {
   svg.append("defs").append("path")
         .attr("id", "land")
         .datum(topojson.object(us, us.objects.land))
@@ -78,9 +69,9 @@ function drawMap(dataset, map) {
         .data(topojson.object(congress, congress.objects.districts).geometries)
       .enter().append("path")
         .attr("class", function(d) { 
-          if(dataset.has(d.id)) { 
-            console.log(dataset.get(d.id));
-            return quantize(dataset.get(d.id).amtRatio * 30); 
+          if(districtData.has(d.id)) { 
+            //console.log(districtData.get(d.id));
+            return quantize(districtData.get(d.id)[attribute] * 30); 
           }
         })
         .attr("d", path)
@@ -102,8 +93,7 @@ function drawMap(dataset, map) {
 
 d3.select('button').on('click', function() {
   datasetNumber += 1;
-    currentDataset = swag;
-    drawMap(currentDataset, us_map);
+    drawMap(colorAttribute);
 });
 
 
