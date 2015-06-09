@@ -48,6 +48,7 @@ path {
 
 #heatmap_legend {
 	width:20%;
+	display: inline-block;
 }
 
 #heatmap {
