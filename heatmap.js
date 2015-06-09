@@ -1,6 +1,7 @@
 var width = 960,
     height = 600;
 
+var swag = d3.map();
 var districtRatings1 = d3.map();
 var districtRatings2 = d3.map();
 var datasets = [d3.map(), d3.map(), d3.map()];
@@ -32,29 +33,37 @@ var tip = d3.tip()
     return "<strong>Rating:</strong> <span style='color:red'>" + d.id + "</span>";
   });
 
+
 svg.call(tip);
 
 
-
-dataset1 = d3.tsv("unemployment.tsv", function(error, data) {
-//  x.domain(data.map(function(d) { return d.x; }));
-//  y.domain([0, d3.max(data, function(d) { return d.y; })]);
-});
-
-
 queue()
-    .defer(d3.json, "usa_map.json", function(d) { us_map = d; })
-    .defer(d3.tsv, "unemployment.tsv", function(d) { datasets[1].set(d.id, +d.rate); })
-    .defer(d3.tsv, "dataset2.tsv", function(d) { datasets[0].set(d.id, +d.rate); })
-    .awaitAll(function(a, b) { drawMap(us_map, datasets[datasetNumber % 3]); });
+    .defer(d3.tsv, "dataset2.tsv", function(d) { 
+      datasets[0].set(d.id, +d.rate); 
+      swag.set(d.id, d);
+    })
+    .defer(d3.json, "us_districts.json")
+    //.defer(d3.json, "usa_map.json")
+    .awaitAll(loadingCallback);
 
-function drawMap(map, dataset) {
+
+function loadingCallback(error, map) {
+  us_map = map[1];
+  drawMap(swag, us_map);
+}
+
+
+function drawMap(dataset, map) {
     svg.append("g")
         .attr("class", "counties")
       .selectAll("path")
         .data(topojson.feature(map, map.objects.counties).features)
       .enter().append("path")
-        .attr("class", function(d) { return quantize(dataset.get(d.id)); })
+        .attr("class", function(d) { 
+          if(dataset.has(d.id)) { 
+            return quantize(dataset.get(d.id).rate); 
+          }
+        })
         .attr("d", path)
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide);
@@ -65,16 +74,11 @@ function drawMap(map, dataset) {
         .attr("d", path);
 }
 
-//function yolo(error, a, b, c) {
-//  drawMap(us_map, districtRatings1);
-//}
-
-setTimeout(function() { drawMap(us_map, districtRatings1); }, 2000);
 
 d3.select('button').on('click', function() {
   datasetNumber += 1;
-    currentDataset = datasets[datasetNumber % 3];
-    drawMap(us_map, currentDataset);
+    currentDataset = swag;
+    drawMap(currentDataset, us_map);
 });
 
 
