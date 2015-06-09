@@ -40,9 +40,9 @@ svg.call(tip);
 
 
 queue()
-    .defer(d3.tsv, "dataset2.tsv", function(d) { 
-      datasets[0].set(d.id, +d.rate); 
-      swag.set(d.id, d);
+    .defer(d3.tsv, "final_data.tsv", function(d) { 
+      //datasets[0].set(d.id, +d.district); 
+      swag.set(d.district, d);
     })
     .defer(d3.json, "us_districts.json")
     .defer(d3.json, "us-congress-10m.json")
@@ -77,6 +77,12 @@ function drawMap(dataset, map) {
       .selectAll("path")
         .data(topojson.object(congress, congress.objects.districts).geometries)
       .enter().append("path")
+        .attr("class", function(d) { 
+          if(dataset.has(d.id)) { 
+            console.log(dataset.get(d.id));
+            return quantize(dataset.get(d.id).amt_ratio * 30); 
+          }
+        })
         .attr("d", path)
       .append("title")
         .text(function(d) { return d.id; });
@@ -91,26 +97,6 @@ function drawMap(dataset, map) {
         .attr("class", "state-boundaries")
         .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
         .attr("d", path);
-  /*
-    svg.append("g")
-        .attr("class", "counties")
-      .selectAll("path")
-        .data(topojson.feature(map, map.objects.counties).features)
-      .enter().append("path")
-        .attr("class", function(d) { 
-          if(dataset.has(d.id)) { 
-            return quantize(dataset.get(d.id).rate); 
-          }
-        })
-        .attr("d", path)
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide);
-
-    svg.append("path")
-        .datum(topojson.mesh(map, map.objects.states, function(a, b) { return a !== b; }))
-        .attr("class", "states")
-        .attr("d", path);
-        */
 }
 
 
