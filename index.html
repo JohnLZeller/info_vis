@@ -12,28 +12,30 @@
 
 <body>
   
-  <div id="heatmap">
-    <h2> Contract heatmap by congressional district </h2>
-  </div>
-  <div id="heatmap_legend">
-    <h2> Heatmap Dataset </h2>
-    <form id="heatmap_dataset">
-      <div>
-        <input id="hds0" type="radio" name="heatmap_dataset" value="0" checked=true> 
-        <label for="hds0"> Total dollar value </label>
-      </div>
-      <div>
-        <input id="hds1" type="radio" name="heatmap_dataset" value="1"> 
-        <label for="hds1"> Awarded contracts </label>
-        
-      </div>
-      <div>
-        <input id="hds2" type="radio" name="heatmap_dataset" value="2">
-        <label for="hds2"> Average contract duration </label>
-      </div>
-    </form>
+  <div id="heatmap_container">
+    <h2 style="text-align:center"> NASA Contracts by State/District </h2>
+    <div id="heatmap"></div>
+    <div id="heatmap_legend">
+      <h2> Heatmap Dataset </h2>
+      <form id="heatmap_dataset">
+        <div>
+          <input id="hds0" type="radio" name="heatmap_dataset" value="0" checked=true> 
+          <label for="hds0"> Total dollar value </label>
+        </div>
+        <div>
+          <input id="hds1" type="radio" name="heatmap_dataset" value="1"> 
+          <label for="hds1"> Awarded contracts </label>
+          
+        </div>
+        <div>
+          <input id="hds2" type="radio" name="heatmap_dataset" value="2">
+          <label for="hds2"> Average contract duration </label>
+        </div>
+      </form>
+    </div>
   </div>
   
+  <h2 style="text-align:center"> Correlation of Company Size to Value of Contracts </h2>
   <div id="scatter"></div>
 </body>
 

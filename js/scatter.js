@@ -26,7 +26,7 @@ var cValue = function(d) { return d.Manufacturer;},
     color = d3.scale.category10();
 
 // add the graph canvas to the body of the webpage
-var svg = d3.select("#scatter").append("svg")
+var svg2 = d3.select("#scatter").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -52,7 +52,7 @@ d3.csv("data/cereal.csv", function(error, data) {
   yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
 
   // x-axis
-  svg.append("g")
+  svg2.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
@@ -64,7 +64,7 @@ d3.csv("data/cereal.csv", function(error, data) {
       .text("Calories");
 
   // y-axis
-  svg.append("g")
+  svg2.append("g")
       .attr("class", "y axis")
       .call(yAxis)
     .append("text")
@@ -76,7 +76,7 @@ d3.csv("data/cereal.csv", function(error, data) {
       .text("Protein (g)");
 
   // draw dots
-  svg.selectAll(".dot")
+  svg2.selectAll(".dot")
       .data(data)
     .enter().append("circle")
       .attr("class", "dot")
@@ -100,7 +100,7 @@ d3.csv("data/cereal.csv", function(error, data) {
       });
 
   // draw legend
-  var legend = svg.selectAll(".legend")
+  var legend = svg2.selectAll(".legend")
       .data(color.domain())
     .enter().append("g")
       .attr("class", "legend")
