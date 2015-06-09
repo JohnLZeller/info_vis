@@ -81,9 +81,10 @@ body {
 
 .tooltip {
   position: absolute;
+  margin-left: 20px;
   width: 200px;
   height: 28px;
-  pointer-events: none;
+  pointer-events: none;;
 }
 
 #scatter {
