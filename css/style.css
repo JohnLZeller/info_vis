@@ -78,6 +78,7 @@ body {
 
 .dot {
   stroke: #000;
+  fill: steelblue;
 }
 
 .dot:hover {

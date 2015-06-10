@@ -1,8 +1,9 @@
 
 var margin2 = {top: 20, right: 20, bottom: 30, left: 40},
     width2 = 960 - margin2.left - margin2.right,
-    height2 = 600 - margin2.top - margin2.bottom,
-    xOffset2 = 50;
+    height2 = 740 - margin2.top - margin2.bottom,
+    xOffset2 = 50,
+    yOffset2 = 240;
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width2], .1);
@@ -12,7 +13,7 @@ var xAxis2 = d3.svg.axis()
     .orient("bottom");
 
 var yValue2 = function(d) { return d.amt;}, // data -> value
-    yScale2 = d3.scale.linear().range([height2, 0]), // value -> display
+    yScale2 = d3.scale.linear().range([height2, yOffset2]), // value -> display
     yMap2 = function(d) { return yScale2(yValue2(d));}, // data -> display
     yAxis2 = d3.svg.axis().scale(yScale2).orient("left");
 
@@ -39,7 +40,7 @@ d3.tsv("data/data.tsv", type, function(error, data) {
 
   svg3.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(" + xOffset2 + "," + height2 + ")")
+      .attr("transform", "translate(" + xOffset2 + "," + (height2 - yOffset2) + ")")
       .call(xAxis2)
     .selectAll("text")
       .style("text-anchor", "end")
@@ -49,11 +50,12 @@ d3.tsv("data/data.tsv", type, function(error, data) {
 
   svg3.append("g")
       .attr("class", "y axis")
-      .attr("transform", "translate(" + xOffset2 + ", 0)")
+      .attr("transform", "translate(" + xOffset2 + ", -" + yOffset2 + ")")
       .call(yAxis2)
     .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
+      .attr("x", -yOffset2)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text("Total Contracts Value ($)");
@@ -64,7 +66,7 @@ d3.tsv("data/data.tsv", type, function(error, data) {
       .attr("class", "bar")
       .attr("x", function(d) { return x(d.company) + xOffset2; })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return yScale2(d.amt); })
+      .attr("y", function(d) { return yScale2(d.amt) - yOffset2; })
       .attr("height", function(d) { return height2 - yScale2(d.amt); })
     .append("title")
       .text(function(d) { 

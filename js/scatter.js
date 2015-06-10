@@ -91,7 +91,6 @@ d3.tsv("data/companies.tsv", function(error, data) {
       .attr("r", 3.5)
       .attr("cx", xMap)
       .attr("cy", yMap)
-      .style("fill", "#02326B")
     .append("title")
       .text(function(d) { 
         return d.company + "\n\nContracts: \t" + numberWithCommas(d.contracts) +
