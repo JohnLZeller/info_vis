@@ -76,12 +76,12 @@ function drawMap(attribute) {
       .attr("class", "districts")
       .attr("clip-path", "url(#clip-land)")
     .selectAll("path")
-      .data(topojson.object(maps[mapNumber], maps[mapNumber].objects[mapOptions[mapNumber]]).geometries)
+      .data(topojson.object(maps[mapNumber],
+            maps[mapNumber].objects[mapOptions[mapNumber]]).geometries)
     .enter().append("path")
       .attr("class", function(d) { 
         if(datasets[mapNumber].has(d.id)) { 
-          console.log('swag');
-          return quantize(datasets[mapNumber].get(d.id)[attribute] * 5); 
+          return quantize(datasets[mapNumber].get(d.id)[attribute]); 
         }
       })
       .attr("d", path)
@@ -90,7 +90,8 @@ function drawMap(attribute) {
         if(datasets[mapNumber].has(d.id)) { 
           return "Contracts: \t" + numberWithCommas(datasets[mapNumber].get(d.id).contracts) +
             "\nValue: \t\t$" + numberWithCommas(datasets[mapNumber].get(d.id).amt) + 
-            "\nDuration: \t\t" + numberWithCommas(datasets[mapNumber].get(d.id).fundingDuration) + " day(s)"; 
+            "\nDuration: \t\t" + numberWithCommas(datasets[mapNumber].get(d.id).fundingDuration) + 
+            " day(s)"; 
         } else {
          return "No contracts"; 
         }
@@ -117,7 +118,7 @@ d3.select('#heatmap_dataset').on('click', function() {
 
 d3.select('#heatmap_borders').on('click', function() {
   mapNumber = d3.select('input[name="heatmap_borders"]:checked').node().value
-  drawMap(colorAttributes[mapNumber]);
+  drawMap(colorAttributes[attributeNumber]);
 });
 
 
