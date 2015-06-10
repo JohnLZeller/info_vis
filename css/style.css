@@ -79,6 +79,10 @@ body {
   stroke: #000;
 }
 
+.dot:hover {
+  fill: orange;
+}
+
 .tooltip {
   position: absolute;
   margin-left: 20px;
@@ -101,7 +105,7 @@ body {
 }
 
 .bar:hover {
-  fill: brown;
+  fill: orange;
 }
 
 #scrollbarchart {
