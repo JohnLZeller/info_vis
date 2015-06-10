@@ -25,7 +25,7 @@ path {
 }
 
 .districts {
-	fill: rgb(251,253,255);
+  fill: rgb(251,253,255);
 }
 
 .districts :hover {
@@ -41,8 +41,8 @@ path {
 .state-boundaries {
   pointer-events: none;
   fill: none;
-	stroke: #bbb;
-	stroke-width: .5px;
+  stroke: #bbb;
+  stroke-width: .5px;
 }
 
 #heatmap_legend {
@@ -53,8 +53,8 @@ path {
 }
 
 #heatmap {
-	width: 960px;
-	display: inline-block;
+  width: 960px;
+  display: inline-block;
 }
 
 #heatmap_container {
@@ -116,7 +116,7 @@ body {
 }
 
 #header {
-	text-align: center;
-	width: 100%;
-	margin-bottom: 75px;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 75px;
 }
