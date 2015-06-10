@@ -114,9 +114,8 @@ body {
   margin: 0 auto;
 }
 
-
-/* ---------- DONUT CHART ---------- */
-
-.arc path {
-  stroke: #fff;
+#header {
+	text-align: center;
+	width: 100%;
+	margin-bottom: 75px;
 }
