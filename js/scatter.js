@@ -30,6 +30,7 @@ var yValue = function(d) { return d.amt;}, // data -> value
 var svg2 = d3.select("#scatter").append("svg")
     .attr("width", width + margin.left + margin.right + xOffset)
     .attr("height", height + margin.top + margin.bottom)
+    .style("margin-left", "-" + xOffset + "px")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 

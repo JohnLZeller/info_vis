@@ -1,7 +1,8 @@
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 500 - margin.top - margin.bottom,
+    xOffset = 50;
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -19,8 +20,9 @@ var yValue = function(d) { return d.amt;}, // data -> value
     yAxis = d3.svg.axis().scale(yScale).orient("left");
 
 var scg3 = d3.select("#scrollbarchart").append("svg")
-    .attr("width", width + margin.left + margin.right)
+    .attr("width", width + margin.left + margin.right + xOffset)
     .attr("height", height + margin.top + margin.bottom)
+    .style("margin-left", "-" + xOffset + "px")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -30,11 +32,12 @@ d3.tsv("data/data.tsv", type, function(error, data) {
 
   scg3.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
+      .attr("transform", "translate(" + xOffset + "," + height + ")")
       .call(xAxis);
 
   scg3.append("g")
       .attr("class", "y axis")
+      .attr("transform", "translate(" + xOffset + ", 0)")
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
@@ -47,7 +50,7 @@ d3.tsv("data/data.tsv", type, function(error, data) {
       .data(data)
     .enter().append("rect")
       .attr("class", "bar")
-      .attr("x", function(d) { return x(d.company); })
+      .attr("x", function(d) { return x(d.company) + xOffset; })
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.amt); })
       .attr("height", function(d) { return height - y(d.amt); });
