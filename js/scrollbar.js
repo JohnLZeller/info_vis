@@ -26,6 +26,16 @@ var svg3 = d3.select("#scrollbarchart").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    //console.log(JSON.stringify(d));
+    return "<strong>Rating:</strong> <span style='color:red'>" + d.id + "</span>";
+  });
+
+svg3.call(tip);
+
 d3.tsv("data/data.tsv", type, function(error, data) {
   x.domain(data.map(function(d) { return d.company; }));
   y.domain([0, d3.max(data, function(d) { return d.amt; })]);
@@ -34,11 +44,11 @@ d3.tsv("data/data.tsv", type, function(error, data) {
       .attr("class", "x axis")
       .attr("transform", "translate(" + xOffset2 + "," + height2 + ")")
       .call(xAxis2)
-      .selectAll("text")
-        .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)");
+    .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-65)");
 
   svg3.append("g")
       .attr("class", "y axis")
@@ -58,7 +68,13 @@ d3.tsv("data/data.tsv", type, function(error, data) {
       .attr("x", function(d) { return x(d.company) + xOffset2; })
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.amt); })
-      .attr("height", function(d) { return height2 - y(d.amt); });
+      .attr("height", function(d) { return height2 - y(d.amt); })
+    .append("title")
+      .text(function(d) { 
+        return d.company + "\n\nContracts: \t" + numberWithCommas(d.contracts) +
+          "\nValue: \t\t$" + numberWithCommas(yValue(d)) + 
+          "\nEmployees: \t" + numberWithCommas(xValue(d));
+      });
 
 });
 
