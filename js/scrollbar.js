@@ -13,27 +13,27 @@ var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .ticks(10, "%");
+var yValue = function(d) { return d.amt;}, // data -> value
+    yScale = d3.scale.linear().range([height, 0]), // value -> display
+    yMap = function(d) { return yScale(yValue(d));}, // data -> display
+    yAxis = d3.svg.axis().scale(yScale).orient("left");
 
-var svg = d3.select("#scrollbarchart").append("svg")
+var scg3 = d3.select("#scrollbarchart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.tsv("data/data.tsv", type, function(error, data) {
-  x.domain(data.map(function(d) { return d.letter; }));
-  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+  x.domain(data.map(function(d) { return d.company; }));
+  y.domain([0, d3.max(data, function(d) { return d.amt; })]);
 
-  svg.append("g")
+  scg3.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
 
-  svg.append("g")
+  scg3.append("g")
       .attr("class", "y axis")
       .call(yAxis)
     .append("text")
@@ -41,20 +41,20 @@ d3.tsv("data/data.tsv", type, function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Frequency");
+      .text("Total Contracts Value ($)");
 
-  svg.selectAll(".bar")
+  scg3.selectAll(".bar")
       .data(data)
     .enter().append("rect")
       .attr("class", "bar")
-      .attr("x", function(d) { return x(d.letter); })
+      .attr("x", function(d) { return x(d.company); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.frequency); })
-      .attr("height", function(d) { return height - y(d.frequency); });
+      .attr("y", function(d) { return y(d.amt); })
+      .attr("height", function(d) { return height - y(d.amt); });
 
 });
 
 function type(d) {
-  d.frequency = +d.frequency;
+  d.amt = +d.amt;
   return d;
 }

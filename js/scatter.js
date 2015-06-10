@@ -1,6 +1,7 @@
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 500 - margin.top - margin.bottom,
+    xOffset = 50;
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -15,7 +16,7 @@ function numberWithCommas(x) {
 
 // setup x 
 var xValue = function(d) { return d.employees;}, // data -> value
-    xScale = d3.scale.linear().range([0, width]), // value -> display
+    xScale = d3.scale.linear().range([xOffset, width + xOffset]), // value -> display
     xMap = function(d) { return xScale(xValue(d));}, // data -> display
     xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
@@ -27,7 +28,7 @@ var yValue = function(d) { return d.amt;}, // data -> value
 
 // add the graph canvas to the body of the webpage
 var svg2 = d3.select("#scatter").append("svg")
-    .attr("width", width + margin.left + margin.right)
+    .attr("width", width + margin.left + margin.right + xOffset)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -59,7 +60,7 @@ d3.tsv("data/companies.tsv", function(error, data) {
   // x-axis
   svg2.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
+      .attr("transform", "translate(" + xOffset + "," + height + ")")
       .call(xAxis)
     .append("text")
       .attr("class", "label")
@@ -71,6 +72,7 @@ d3.tsv("data/companies.tsv", function(error, data) {
   // y-axis
   svg2.append("g")
       .attr("class", "y axis")
+      .attr("transform", "translate(" + xOffset + ", 0)")
       .call(yAxis)
     .append("text")
       .attr("class", "label")

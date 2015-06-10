@@ -70,6 +70,7 @@ body {
 
 .axis path,
 .axis line {
+  left: 1000px;
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
