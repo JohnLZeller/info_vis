@@ -47,13 +47,19 @@ path {
 
 #heatmap_legend {
   display: inline-block;
-  margin-top: 90px;
+  margin-top: 40px;
+  width: 190px;
   vertical-align: top;
 }
 
 #heatmap {
 	width: 960px;
 	display: inline-block;
+}
+
+#heatmap_container {
+  width: 1200px;
+  margin: 0 auto;
 }
 
 /* ---------- SCATTER ---------- */
@@ -75,12 +81,13 @@ body {
 
 .tooltip {
   position: absolute;
+  margin-left: 20px;
   width: 200px;
   height: 28px;
-  pointer-events: none;
+  pointer-events: none;;
 }
 
 #scatter {
-  width: 75%;
-  display: inline-block;
+  width: 1000px;
+  margin: 0 auto;
 }

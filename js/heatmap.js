@@ -1,6 +1,10 @@
 var width = 960,
     height = 600;
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 var districtData = d3.map();
 
 var us;
@@ -19,7 +23,7 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
-var svg = d3.select("#heatmap").append("svg")
+var svg1 = d3.select("#heatmap").append("svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -32,7 +36,7 @@ var tip = d3.tip()
   });
 
 
-svg.call(tip);
+svg1.call(tip);
 
 
 queue()
@@ -52,50 +56,50 @@ function loadingCallback(error, map) {
 
 
 function drawMap(attribute) {
-  svg.append("defs").append("path")
+  svg1.append("defs").append("path")
         .attr("id", "land")
         .datum(topojson.object(us, us.objects.land))
         .attr("d", path);
 
-    svg.append("clipPath")
-        .attr("id", "clip-land")
-      .append("use")
-        .attr("xlink:href", "#land");
+  svg1.append("clipPath")
+      .attr("id", "clip-land")
+    .append("use")
+      .attr("xlink:href", "#land");
 
-    svg.append("g")
-        .attr("class", "districts")
-        .attr("clip-path", "url(#clip-land)")
-      .selectAll("path")
-        .data(topojson.object(congress, congress.objects.districts).geometries)
-      .enter().append("path")
-        .attr("class", function(d) { 
-          if(districtData.has(d.id)) { 
-            //console.log(districtData.get(d.id));
-            return quantize(districtData.get(d.id)[attribute] * 5); 
-          }
-        })
-        .attr("d", path)
-      .append("title")
-        .text(function(d) { 
-          if(districtData.has(d.id)) { 
-            return "Contracts: \t" + districtData.get(d.id).contracts +
-              "\nValue:\t\t" + numeral(districtData.get(d.id).amt).format('$0a') + 
-              "\nDuration: \t\t" + districtData.get(d.id).fundingDuration + " days"; 
-          } else {
-           return "No contracts"; 
-          }
-        });
-            
-    svg.append("path")
-        .attr("class", "district-boundaries")
-        .attr("clip-path", "url(#clip-land)")
-        .datum(topojson.mesh(congress, congress.objects.districts, function(a, b) { return (a.id / 1000 | 0) === (b.id / 1000 | 0); }))
-        .attr("d", path);
+  svg1.append("g")
+      .attr("class", "districts")
+      .attr("clip-path", "url(#clip-land)")
+    .selectAll("path")
+      .data(topojson.object(congress, congress.objects.districts).geometries)
+    .enter().append("path")
+      .attr("class", function(d) { 
+        if(districtData.has(d.id)) { 
+          //console.log(districtData.get(d.id));
+          return quantize(districtData.get(d.id)[attribute] * 5); 
+        }
+      })
+      .attr("d", path)
+    .append("title")
+      .text(function(d) { 
+        if(districtData.has(d.id)) { 
+          return "Contracts: \t" + numberWithCommas(districtData.get(d.id).contracts) +
+            "\nValue: \t\t$" + numberWithCommas(districtData.get(d.id).amt) + 
+            "\nDuration: \t\t" + numberWithCommas(districtData.get(d.id).fundingDuration) + " day(s)"; 
+        } else {
+         return "No contracts"; 
+        }
+      });
+          
+  svg1.append("path")
+      .attr("class", "district-boundaries")
+      .attr("clip-path", "url(#clip-land)")
+      .datum(topojson.mesh(congress, congress.objects.districts, function(a, b) { return (a.id / 1000 | 0) === (b.id / 1000 | 0); }))
+      .attr("d", path);
 
-    svg.append("path")
-        .attr("class", "state-boundaries")
-        .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-        .attr("d", path);
+  svg1.append("path")
+      .attr("class", "state-boundaries")
+      .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+      .attr("d", path);
 }
 
 
