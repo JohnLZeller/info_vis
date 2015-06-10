@@ -110,13 +110,17 @@ function drawMap(attribute) {
 }
 
 
-d3.select('#heatmap_dataset').on('click', function() {
+var datasetForm = d3.select('#heatmap_dataset')
+datasetForm[0][0].reset();
+datasetForm.on('click', function() {
   attributeNumber = d3.select('input[name="heatmap_dataset"]:checked').node().value
   drawMap(colorAttributes[attributeNumber]);
 });
 
 
-d3.select('#heatmap_borders').on('click', function() {
+var bordersForm = d3.select('#heatmap_borders')
+bordersForm[0][0].reset();
+bordersForm.on('click', function() {
   mapNumber = d3.select('input[name="heatmap_borders"]:checked').node().value
   drawMap(colorAttributes[attributeNumber]);
 });
