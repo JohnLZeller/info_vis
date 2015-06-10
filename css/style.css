@@ -48,7 +48,6 @@ path {
 #heatmap_legend {
   display: inline-block;
   margin-top: 40px;
-  width: 190px;
   vertical-align: top;
 }
 
@@ -58,7 +57,7 @@ path {
 }
 
 #heatmap_container {
-  width: 1200px;
+  width: 1400px;
   margin: 0 auto;
 }
 
@@ -110,8 +109,43 @@ body {
   margin: 0 auto;
 }
 
-#header {
-	text-align: center;
+body {
+	background-color: #29516d;
+	font-size: 17px;
+}
+
+#header{
 	width: 100%;
-	margin-bottom: 75px;
+	margin-bottom: 50px;
+  padding-top: 20px;
+  text-align: center;
+  color: #fff;
+  background: -moz-linear-gradient(top, #123752 0%, #29516d 100%); /* FF3.6+ subtle gradients */
+}
+
+
+#column1{
+  float: left;
+  width: 80%;
+  background: #fff;
+	margin-left: 10%;
+}
+
+#footer{
+  clear: both;
+  text-align: center;
+  padding: 5px 0px 8px 0px;
+  height: 75px;
+  font-weight: normal;
+}
+
+#scatter_container, #heatmap_container, #scrollbarchart_container {
+	padding-top: 40px;
+}
+
+.break {
+	margin: 0px;
+	height: 10px;
+	width: 100%;
+	background-color: #29516d;
 }
