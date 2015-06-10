@@ -5,12 +5,13 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-var districtData = d3.map();
-
 var us;
-var congress;
-var datasetNumber = 0;
+var attributeNumber = 0;
+var datasets = [d3.map(), d3.map()];
+var mapNumber = 0;
+var maps = [];
 var colorAttributes = ["amtRatio", "contRatio", "fundingDurationRatio"];
+var mapOptions = ["districts", "states"];
 
 var quantize = d3.scale.quantize()
     .domain([0, .15])
@@ -41,17 +42,22 @@ svg1.call(tip);
 
 queue()
     .defer(d3.tsv, "data/districts.tsv", function(d) { 
-      districtData.set(d.district, d);
+      datasets[0].set(d.district, d);
     })
     .defer(d3.json, "json/us-congress-10m.json")
     .defer(d3.json, "json/us-10m.json")
+    .defer(d3.json, "json/us-states-10m.json")
+    .defer(d3.tsv, "data/states.tsv", function(d) { 
+      datasets[1].set(d.state, d);
+    })
     .awaitAll(loadingCallback);
 
 
 function loadingCallback(error, map) {
-  congress = map[1];
+  maps[0] = map[1];
   us = map[2];
-  drawMap(colorAttributes[datasetNumber]);
+  maps[1] = map[3];
+  drawMap(colorAttributes[attributeNumber]);
 }
 
 
@@ -70,21 +76,21 @@ function drawMap(attribute) {
       .attr("class", "districts")
       .attr("clip-path", "url(#clip-land)")
     .selectAll("path")
-      .data(topojson.object(congress, congress.objects.districts).geometries)
+      .data(topojson.object(maps[mapNumber], maps[mapNumber].objects[mapOptions[mapNumber]]).geometries)
     .enter().append("path")
       .attr("class", function(d) { 
-        if(districtData.has(d.id)) { 
-          //console.log(districtData.get(d.id));
-          return quantize(districtData.get(d.id)[attribute] * 5); 
+        if(datasets[mapNumber].has(d.id)) { 
+          console.log('swag');
+          return quantize(datasets[mapNumber].get(d.id)[attribute] * 5); 
         }
       })
       .attr("d", path)
     .append("title")
       .text(function(d) { 
-        if(districtData.has(d.id)) { 
-          return "Contracts: \t" + numberWithCommas(districtData.get(d.id).contracts) +
-            "\nValue: \t\t$" + numberWithCommas(districtData.get(d.id).amt) + 
-            "\nDuration: \t\t" + numberWithCommas(districtData.get(d.id).fundingDuration) + " day(s)"; 
+        if(datasets[mapNumber].has(d.id)) { 
+          return "Contracts: \t" + numberWithCommas(datasets[mapNumber].get(d.id).contracts) +
+            "\nValue: \t\t$" + numberWithCommas(datasets[mapNumber].get(d.id).amt) + 
+            "\nDuration: \t\t" + numberWithCommas(datasets[mapNumber].get(d.id).fundingDuration) + " day(s)"; 
         } else {
          return "No contracts"; 
         }
@@ -93,7 +99,7 @@ function drawMap(attribute) {
   svg1.append("path")
       .attr("class", "district-boundaries")
       .attr("clip-path", "url(#clip-land)")
-      .datum(topojson.mesh(congress, congress.objects.districts, function(a, b) { return (a.id / 1000 | 0) === (b.id / 1000 | 0); }))
+      .datum(topojson.mesh(maps[mapNumber], maps[mapNumber].objects[mapOptions[mapNumber]], function(a, b) { return (a.id / 1000 | 0) === (b.id / 1000 | 0); }))
       .attr("d", path);
 
   svg1.append("path")
@@ -104,8 +110,14 @@ function drawMap(attribute) {
 
 
 d3.select('#heatmap_dataset').on('click', function() {
-  datasetNumber = d3.select('input[name="heatmap_dataset"]:checked').node().value
-  drawMap(colorAttributes[datasetNumber % 3]);
+  attributeNumber = d3.select('input[name="heatmap_dataset"]:checked').node().value
+  drawMap(colorAttributes[attributeNumber]);
+});
+
+
+d3.select('#heatmap_borders').on('click', function() {
+  mapNumber = d3.select('input[name="heatmap_borders"]:checked').node().value
+  drawMap(colorAttributes[mapNumber]);
 });
 
 
