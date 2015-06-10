@@ -61,11 +61,11 @@ d3.tsv("data/companies.tsv", function(error, data) {
   // x-axis
   svg2.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(" + xOffset + "," + height + ")")
+      .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
     .append("text")
       .attr("class", "label")
-      .attr("x", width)
+      .attr("x", width + xOffset)
       .attr("y", -6)
       .style("text-anchor", "end")
       .text("Employees");
