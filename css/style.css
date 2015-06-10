@@ -113,3 +113,10 @@ body {
   width: 1000px;
   margin: 0 auto;
 }
+
+
+/* ---------- DONUT CHART ---------- */
+
+.arc path {
+  stroke: #fff;
+}

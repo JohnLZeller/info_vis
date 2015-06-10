@@ -7,9 +7,6 @@ var margin2 = {top: 20, right: 20, bottom: 30, left: 40},
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width2], .1);
 
-var y = d3.scale.linear()
-    .range([height2, 0]);
-
 var xAxis2 = d3.svg.axis()
     .scale(x)
     .orient("bottom");
@@ -38,7 +35,7 @@ svg3.call(tip);
 
 d3.tsv("data/data.tsv", type, function(error, data) {
   x.domain(data.map(function(d) { return d.company; }));
-  y.domain([0, d3.max(data, function(d) { return d.amt; })]);
+  yScale2.domain([0, d3.max(data, function(d) { return d.amt; })]);
 
   svg3.append("g")
       .attr("class", "x axis")
@@ -67,8 +64,8 @@ d3.tsv("data/data.tsv", type, function(error, data) {
       .attr("class", "bar")
       .attr("x", function(d) { return x(d.company) + xOffset2; })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.amt); })
-      .attr("height", function(d) { return height2 - y(d.amt); })
+      .attr("y", function(d) { return yScale2(d.amt); })
+      .attr("height", function(d) { return height2 - yScale2(d.amt); })
     .append("title")
       .text(function(d) { 
         return d.company + "\n\nContracts: \t" + numberWithCommas(d.contracts) +
