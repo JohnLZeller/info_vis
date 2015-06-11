@@ -1,0 +1,122 @@
+/* ---------- HEATMAP ---------- */
+
+.counties {
+  fill: none;
+}
+
+.states {
+  fill: none;
+  stroke: #fff;
+  stroke-linejoin: round;
+}
+
+.q0-9 { fill:rgb(247,251,255); }
+.q1-9 { fill:rgb(222,235,247); }
+.q2-9 { fill:rgb(198,219,239); }
+.q3-9 { fill:rgb(158,202,225); }
+.q4-9 { fill:rgb(107,174,214); }
+.q5-9 { fill:rgb(66,146,198); }
+.q6-9 { fill:rgb(33,113,181); }
+.q7-9 { fill:rgb(8,81,156); }
+.q8-9 { fill:rgb(8,48,107); }
+
+path {
+  stroke-linejoin: round;
+}
+
+.districts {
+  fill: rgb(251,253,255);
+}
+
+.districts :hover {
+  fill: orange;
+}
+
+.district-boundaries {
+  pointer-events: none;
+  fill: none;
+  stroke: #ddd;
+}
+
+.state-boundaries {
+  pointer-events: none;
+  fill: none;
+  stroke: #bbb;
+  stroke-width: .5px;
+}
+
+#heatmap_legend {
+  display: inline-block;
+  margin-top: 40px;
+  width: 190px;
+  vertical-align: top;
+}
+
+#heatmap {
+  width: 960px;
+  display: inline-block;
+}
+
+#heatmap_container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---------- SCATTER ---------- */
+
+body {
+  font: 11px sans-serif;
+}
+
+.axis path,
+.axis line {
+  left: 1000px;
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+  fill: steelblue;
+}
+
+.dot:hover {
+  fill: orange;
+}
+
+.tooltip {
+  position: absolute;
+  margin-left: 20px;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;;
+}
+
+#scatter {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+/* ---------- SCROLL BAR ---------- */
+
+.bar {
+  fill: steelblue;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.bar:hover {
+  fill: orange;
+}
+
+#scrollbarchart {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+#header {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 75px;
+}

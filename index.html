@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+  <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/queue.v1.min.js"></script>
+  <script src="http://d3js.org/topojson.v0.min.js"></script>
+  <script src="https://raw.githubusercontent.com/Caged/d3-tip/master/index.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+</head>
+
+<body>
+  <div id="header">
+    <h1> 2014 NASA Contracts </h1>
+    <h3> 
+      <p> John Zeller </p>
+      <p> Michael Woffendin </p>
+    </h3>
+  </div>
+  
+  
+  <div id="columns">
+    <div id="column0"> </div>
+    
+    <div id="column1"> </div>
+      <div id="heatmap_container">
+        <h2 style="text-align:center"> NASA Contracts by State/District </h2>
+        <div id="heatmap"></div>
+        <div id="heatmap_legend">
+          <h2> Contract Grouping </h2>
+          <form id="heatmap_borders">
+            <div>
+              <input id="hb0" type="radio" name="heatmap_borders" value="0" checked=true> 
+              <label for="hb0"> By congressional district </label>
+            </div>
+            <div>
+              <input id="hb1" type="radio" name="heatmap_borders" value="1"> 
+              <label for="hb1"> By state </label>
+              
+            </div>
+          </form>
+          
+          <h2> Heatmap Dataset </h2>
+          <form id="heatmap_dataset">
+            <div>
+              <input id="hds0" type="radio" name="heatmap_dataset" value="0" checked=true> 
+              <label for="hds0"> Total Value of Contracts ($) </label>
+            </div>
+            <div>
+              <input id="hds1" type="radio" name="heatmap_dataset" value="1"> 
+              <label for="hds1"> Number of Contracts </label>
+              
+            </div>
+            <div>
+              <input id="hds2" type="radio" name="heatmap_dataset" value="2">
+              <label for="hds2"> Average Contract Duration (days) </label>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <h2 style="text-align:center"> Correlation of Company Size to Value of Contracts </h2>
+      <div id="scatter"></div>
+    
+      <h2 style="text-align:center"> NASA Contracts by Company </h2>
+      <div id="scrollbarchart"></div>
+    </div>
+    
+    <div id="column2"> </div>
+  </div>
+  
+  
+  <div id="footer">
+    <h2> Thanks for visiting! </h2>
+  </div>
+</body>
+
+<script src="js/heatmap.js"></script>
+<script src="js/scatter.js"></script>
+<script src="js/scrollbar.js"></script>
+
